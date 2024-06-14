@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Password Generator </title>
+</head>
+
+<style>
+    body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px;
+        width: 300px;
+        margin: 0 auto;
+    }
+
+    .container label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .checkbox-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    input[type="checkbox"],
+    input[type="number"],
+    input[type="text"] {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    #generateButton {
+        background-color: #4CAF50;
+        /* Green */
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    #generateButton:hover {
+        background-color: #3e8e41;
+    }
+</style>
+
+<body>
+
+
+    <h1>Password Generator</h1>
+
+    <div class="container">
+
+        <input type="number" id="passwordLength" value='12' min="8" max="128">
+        <label for="passwordLength">Password Length</label>
+
+
+        <div class="checkbox-container">
+            <input type="checkbox" id="includeUppercase" checked>
+            <label for="includeUppercase">Uppercase Letters</label>
+
+            <input type="checkbox" id="includeLowercase" checked>
+            <label for="includeLowercase">Lowercase Letters</label>
+
+            <input type="checkbox" id="includeNumbers" checked>
+            <label for="includeNumbers">Numbers</label>
+
+            <input type="checkbox" id="includeSymbols" checked>
+            <label for="includeSymbols">Symbols</label>
+
+        </div>
+
+        <button id="generateButton">Generate Password</button>
+        <input type="text" id="generatePassword" readonly>
+
+
+
+
+
+    </div>
+
+
+    <script>
+        //  getting access to html elements
+        const passwordLengthInput = document.getElementById('passwordLength');
+        const includeUppercaseCheckbox = document.getElementById('includeUppercase');
+        const includeLowercaseCheckbox = document.getElementById('includeLowercase');
+        const includeNumbersCheckbox = document.getElementById('includeNumbers');
+        const includeSymbolsCheckbox = document.getElementById('includeSymbols');
+        const generateButton = document.getElementById('generateButton');
+        const generatedPasswordInput = document.getElementById('generatePassword');
+
+        // Creating new values here 
+        const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+        const uppercaseLetters = lowercaseLetters.toUpperCase();
+
+        const numbers = '0123456789';
+        const symbols = '!@#$%^&*()_+-=[]{};:\'\",<.>/?';
+
+
+
+function generatePassword(){
+
+let characterPool = '';
+
+//  Add characters based on checkbox selections
+if (includeUppercaseCheckbox.checked) characterPool += uppercaseLetters;
+if (includeLowercaseCheckbox.checked) characterPool += lowercaseLetters;
+if(includeLowercaseCheckbox.checked) characterPool += numbers;
+if (includeSymbolsCheckbox.checked) characterPool += symbols;
+
+//  Validate character pool ( at least one type selected )
+if(characterPool === ''){
+
+    alert('please select at least one character type!');
+    return;
+}
+// Generate random password
+
+let password = ' ';
+for (let i = 0; i<passwordLengthInput.value; i++){
+
+    password += characterPool[Math.floor(Math.random() * characterPool.length)];
+}
+
+generatedPasswordInput.value = password;
+
+}
+
+generateButton.addEventListener('click', generatePassword);
+
+
+    </script>
+
+
+</body>
+
+</html>
